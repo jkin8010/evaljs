@@ -38,7 +38,8 @@
     "build": "rollup -c",
     "build:dev": "cross-env NODE_ENV=development npm run build",
     "build:prod": "c ross-env NODE_ENV=production npm run build",
-    "lint": "eslint ./src/**/*.js ./bin/**/*"
+    "lint": "eslint ./src/**/*.js ./bin/**/*",
+    "prepare": "npm run build:prod"
   },
   "keywords": [
     "eval",
