@@ -1,25 +1,34 @@
 #!/usr/bin/env node
 
-var repl = require('repl');
-var evaljs = require('../');
-var parse = require('acorn').parse;
-var fs = require('fs');
-var env = new evaljs.Environment([global, {require: require}]);
+const repl = require('repl')
+const { Environment } = require('../dist/evaljs')
 
-function run(iter){
-  var result = iter.next();
-  while(!result.done) {
-    result = iter.next();
+const env = new Environment([
+  global,
+  {
+    require
   }
-  return result.value;
+])
+
+function run (code) {
+  const iterator = env.gen(code)()
+
+  let result = iterator
+  if (iterator && typeof iterator.next === 'function') {
+    do {
+      result = iterator.next()
+    } while (!result.done)
+  }
+
+  return result
 }
 
 repl.start({
-  eval: function (cmd, context, filename, callback) {
+  eval (cmd, context, filename, callback) {
     try {
-      callback(null, run(env.gen(cmd)()))
+      callback(null, run(cmd))
     } catch (err) {
-      callback(err);
-    };
+      callback(err)
+    }
   }
-});
+})
