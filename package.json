@@ -1,27 +1,44 @@
 {
   "name": "evaljs",
-  "version": "2.0.1",
+  "version": "2.1.0",
+  "private": true,
   "description": "A JavaScript interpreter written in JavaScript",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "bin": "./bin/evaljs",
   "dependencies": {
-    "acorn": "^4.0.4",
-    "require-from-string": "^1.2.1"
+    "acorn": "^6.1.1",
+    "events": "^3.0.0"
   },
   "devDependencies": {
-    "browserify": "^13.1.1",
-    "esprima": "^3.1.2",
-    "jshint": "^2.9.4",
-    "regenerator": "^0.9.5",
-    "uglify-js": "^2.7.5"
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/runtime": "^7.4.4",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^9.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "rollup": "^1.11.3",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-uglify": "^6.0.2"
   },
   "scripts": {
-    "test": "npm run compile && npm run jshint && node test.js",
-    "compile": "./node_modules/regenerator/bin/regenerator --include-runtime ./index.js > ./index-compiled.js",
-    "jshint": "./node_modules/.bin/jshint index.js test.js theTest.js",
-    "build": "mkdir -p dist && npm run build-js && npm run minify",
-    "build-js": "./node_modules/.bin/browserify -r acorn -r ./index-compiled.js:evaljs -o dist/eval.js",
-    "minify": "./node_modules/.bin/uglifyjs -mc -o dist/eval.min.js dist/eval.js"
+    "test": "echo 'test'",
+    "start": "rollup -c --watch ./src",
+    "build": "rollup -c",
+    "build:dev": "cross-env NODE_ENV=development npm run build",
+    "build:prod": "c ross-env NODE_ENV=production npm run build",
+    "lint": "eslint ./src/**/*.js ./bin/**/*"
   },
   "keywords": [
     "eval",
@@ -35,7 +52,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/marten-de-vries/evaljs.git"
+    "url": "https://github.com/jkin8010/evaljs.git"
   },
   "license": "ISC",
   "author": "Marten de Vries",
@@ -44,6 +61,10 @@
       "name": "Jason Huggins",
       "email": "jrhuggins@gmail.com",
       "url": "http://www.hugs.io/"
+    },
+    {
+      "name": "jkin8010",
+      "email": "jkin8010@gmail.com"
     }
   ]
 }
